@@ -4,26 +4,26 @@ const Schema = mongoose.Schema;
 const resumeSchema = new Schema({
     Fname: {
         type: String,
-        required: true,
+        required: false,
         unique: true,
     },
     Lname: {
         type: String,
-        required: true,
-        match: /[a-z]/,
+        required: false,
+        // match: /[a-z]/,
     },
     Email:{
         type:String,
-        required: 'Email address is required',
-        validate: [validateEmail, 'Please fill a valid email address'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+        // required: 'Email address is required',
+        // validate: [validateEmail, 'Please fill a valid email address'],
+        // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
      
     },
   
     PhoneNumber:{
         type: Number,
         required:true,
-        length:8
+        // length:8
     },
     Gender: {
         type: String,
@@ -35,7 +35,8 @@ const resumeSchema = new Schema({
         max: 75,
     },
     DateOfBirth: {
-        type: Date,
+        type: String,
+        // default : Date.now
      },
     //  <a href="#" onclick="window.open('MyPDF.pdf', '_blank', 'fullscreen=yes'); return false;">MyPDF</a>
  About:{
