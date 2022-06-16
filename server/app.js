@@ -25,6 +25,14 @@ app.use('/admin', require('./routes/adminRoute'));
 //Employee
 app.use('/employee',require('./routes/employeeRoute'));
 
+//Employer
+app.use('/employer',require('./routes/employerRoute'));
+
+//Resume
+app.use('/resume',require('./routes/resumeRoute'));
+
+//Job
+app.use('/job',require('./routes/jobRoute'));
 
 app.listen(2002);
 
