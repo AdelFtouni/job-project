@@ -1,4 +1,4 @@
-const {addEmployee, getEmployee, updateEmployee,deleteEmployee,registerEmployee} = require('../controllers/employeeController')
+const {addEmployee, getEmployee, updateEmployee,deleteEmployee,registerEmployee,loginEmployee} = require('../controllers/employeeController')
 const Router = require('express').Router;
 const passport = require('passport');
 const passportConfig = require('../passport');
@@ -25,7 +25,7 @@ employeeRouter.delete('/:id/delete', deleteEmployee);
 employeeRouter.post('/registerEmployee', registerEmployee);
 
 //login for employee
-
+employeeRouter.post('/loginEmployee', loginEmployee);
 
 
 module.exports = employeeRouter;

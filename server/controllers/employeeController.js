@@ -4,6 +4,13 @@ const passport = require('passport');
 const passportConfig = require('../passport');
 const JWT = require('jsonwebtoken');
 
+const signToken=employeeID =>{
+    return JWT.sign({
+        iss :"NoobCoder",
+        //pk of the user
+        sub : employeeID
+    },"NoobCoder",{expiresIn:"7d"});
+}
 
 
 // registration for employee
@@ -27,6 +34,17 @@ const registerEmployee = async  (req,res) => {
 }
 
 // //login for employee
+
+const loginEmployee = (passport.authenticate('local',{session:false}),(req,res)=>{
+    if(req.isAuthenticated()){
+       const {_id,Email,Password}=req.employee;
+       const token=signToken(_id);
+       res.cookie('access_token',token,{httpOnly:true, sameSite:true});
+       res.status(200).json({isAuthenticated:true,employee:{Email,Password}});
+    }
+ 
+ });
+ 
 
 
 
@@ -117,4 +135,4 @@ const deleteEmployee = async (req, res) => {employeeModel.findByIdAndRemove(req.
 }
 
 
-module.exports = {addEmployee,getEmployee,updateEmployee,deleteEmployee,registerEmployee}
+module.exports = {addEmployee,getEmployee,updateEmployee,deleteEmployee,registerEmployee,loginEmployee}
