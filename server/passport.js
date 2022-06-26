@@ -1,7 +1,7 @@
 const passport=require('passport');
 const LocalStrategy=require('passport-local').Strategy;
 const JwtStrategy=require('passport-jwt').Strategy;
-const User=require('./models/User');
+const employeeModel =require('./models/employee');
 
 const cookieExtractor=req=>{
     let token=null;
@@ -15,24 +15,24 @@ passport.use(new JwtStrategy({
     jwtFromRequest: cookieExtractor,
     secretOrKey:"NoobCoder"
 },(payload,done)=>{
-    User.findById({_id:payload.sub},(err,user)=>{
+    employeeModel.findById({_id:payload.sub},(err,employee)=>{
         if(err)
         return done(err,false);
-        if(user)
-        return done (null,user);
+        if(employee)
+        return done (null,employee);
         else 
         return done(null,false);
     });
 }));
 //authenticated local strategy using username and password
-passport.use(new LocalStrategy((username,password,done)=>{
-    User.findOne({username},(err,user)=>{
+passport.use(new LocalStrategy((Email,Password,done)=>{
+    employeeModel.findOne({Email},(err,employee)=>{
         if(err)
            return done(err);
-        if(!user)
+        if(!employee)
            return done(null,false);
     //check if password is correct
-        user.comparePassword(password,done);
+        employee.comparePassword(Password,done);
         
     });
 }));
