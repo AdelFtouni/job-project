@@ -4,13 +4,7 @@ const passport = require('passport');
 const passportConfig = require('../passport');
 const JWT = require('jsonwebtoken');
 
-const signToken=employeeID =>{
-    return JWT.sign({
-        iss :"NoobCoder",
-        //pk of the user
-        sub : employeeID
-    },"NoobCoder",{expiresIn:"7d"});
-}
+
 
 
 // registration for employee
@@ -35,7 +29,8 @@ const registerEmployee = async  (req,res) => {
 
 // //login for employee
 
-const loginEmployee = (passport.authenticate('local',{session:false}),(req,res)=>{
+
+const loginEmployee = ( passport.authenticate('local',{session:false}),(req,res)=>{
     if(req.isAuthenticated()){
        const {_id,Email,Password}=req.employee;
        const token=signToken(_id);
@@ -43,7 +38,7 @@ const loginEmployee = (passport.authenticate('local',{session:false}),(req,res)=
        res.status(200).json({isAuthenticated:true,employee:{Email,Password}});
     }
  
- });
+});
  
 
 
@@ -65,6 +60,8 @@ console.log(req.body)
     console.log(error);
     }
 }
+
+
 // GET request for a list of all cars
 const getEmployee = async (req, res) => {
     try{
@@ -93,10 +90,6 @@ const getEmployee = async (req, res) => {
         Age && (filters.Age=Age)
         Resume && (filters.Resume=Resume)
         ProfilePicture && (filters.ProfilePicture=ProfilePicture)
-
-
-
-
 
         
     const employee= await employeeModel.find(filters);
@@ -135,4 +128,4 @@ const deleteEmployee = async (req, res) => {employeeModel.findByIdAndRemove(req.
 }
 
 
-module.exports = {addEmployee,getEmployee,updateEmployee,deleteEmployee,registerEmployee,loginEmployee}
+module.exports = {registerEmployee, addEmployee,getEmployee,updateEmployee,deleteEmployee}

@@ -16,8 +16,9 @@ passport.use(new JwtStrategy({
     secretOrKey:"NoobCoder"
 },(payload,done)=>{
     employeeModel.findById({_id:payload.sub},(err,employee)=>{
-        if(err)
-        return done(err,false);
+        if(err){
+            return done(err,false);
+        }
         if(employee)
         return done (null,employee);
         else 
@@ -25,7 +26,10 @@ passport.use(new JwtStrategy({
     });
 }));
 //authenticated local strategy using username and password
-passport.use(new LocalStrategy((Email,Password,done)=>{
+passport.use(new LocalStrategy({
+    usernameField: "Email",
+    passwordField: "Password"
+},(Email,Password,done)=>{
     employeeModel.findOne({Email},(err,employee)=>{
         if(err)
            return done(err);
