@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser')
 
 
 // Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env
@@ -9,7 +10,7 @@ const dotenv = require('dotenv');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
+app.use(cookieParser())
 const connectDB = require('./config/db');
 
 // Load Config

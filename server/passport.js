@@ -8,6 +8,7 @@ const cookieExtractor=req=>{
     if(req && req.cookies){
         token = req.cookies["access_token"];
     }
+    console.log(req.cookies);
     return token;
 }
 //authorization to protect the end point(todos)
@@ -15,6 +16,7 @@ passport.use(new JwtStrategy({
     jwtFromRequest: cookieExtractor,
     secretOrKey:"NoobCoder"
 },(payload,done)=>{
+  
     employeeModel.findById({_id:payload.sub},(err,employee)=>{
         if(err){
             return done(err,false);
