@@ -1,8 +1,30 @@
 const mongoose = require('mongoose');
-const employerModel = require('../models/employer')
+const employerModel = require('../models/employer');
+const passport = require('passport');
+const passportConfig = require('../passport');
+const JWT = require('jsonwebtoken');
 
 
 
+// registration for employer
+const registerEmployer = async  (req,res) => {
+    const {Fname,Lname,Email,Password,PhoneNumber,Gender,CompanyName} = req.body;
+    employerModel.findOne({Email},(err,employee) => {
+        if(err)
+            res.status(500).json({message : {msgBody: "Error has occured" , msgError: true}})
+        if(employee)
+            res.status(400).json({message : {msgBody: "Email already taken" , msgError: true}})
+        else{
+            const newEmployer = new employerModel({Fname,Lname,Email,Password,PhoneNumber,Gender,CompanyName});
+            newEmployer.save(err=>{
+                if(err)
+                    res.status(500).json({message : {msgBody: "Error has occured" , msgError: true}})
+                else
+                    res.status(201).json({message : {msgBody: "Employer Successfully created" , msgError: false}})
+            });
+        }
+    });
+}
 // POST request 
 const addEmployer = async (req, res) => {
     try{
@@ -88,4 +110,4 @@ const deleteEmployer = async (req, res) => {employerModel.findByIdAndRemove(req.
 }
 
 
-module.exports = {addEmployer,getEmployer,updateEmployer,deleteEmployer}
+module.exports = {registerEmployer,addEmployer,getEmployer,updateEmployer,deleteEmployer}

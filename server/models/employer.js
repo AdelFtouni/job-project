@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const employerSchema = new Schema({
     Fname: {
@@ -38,6 +39,29 @@ const employerSchema = new Schema({
    }
 
 }, { timestamps: true });
+
+employerSchema.pre('save',function(next){
+    if(!this.isModified('Password'))
+        return next();
+    bcrypt.hash(this.Password,10,(err,passwordHash)=>{
+        if(err)
+            return next(err);
+        this.Password = passwordHash;
+        next();
+    });
+});
+
+employerSchema.methods.comparePassword = function(Password,cb){
+    bcrypt.compare(Password,this.Password,(err,isMatch)=>{
+        if(err)
+            return cb(err);
+        else{
+            if(!isMatch)
+                return cb(null,isMatch);
+            return cb(null,this);
+        }
+    });
+}
 
 // Create a model with the specific schema
 const employerModel = mongoose.model("employer", employerSchema);
