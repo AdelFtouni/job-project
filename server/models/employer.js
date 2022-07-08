@@ -6,12 +6,12 @@ const employerSchema = new Schema({
     Fname: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
     },
     Lname: {
         type: String,
         required: true,
-        match: /[a-z]/,
+        // match: /[a-z]/,
     },
     Email:{
         type:String,
@@ -21,13 +21,13 @@ const employerSchema = new Schema({
     Password:{
             type:String,
             required:true,
-            match:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
-            minlength:5
+            // match:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
+            // minlength:5
     },
     PhoneNumber:{
         type: Number,
         required:true,
-        length:8
+        // length:8
     },
     Gender: {
         type: String,
